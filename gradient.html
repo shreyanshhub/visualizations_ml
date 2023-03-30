@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Gradient Descent</title>
+    <script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
+
+
+    
+      <link rel="stylesheet" href="css/normalize.css">
+      <link rel="stylesheet" href="css/style.css">
+      <script src="js/numeric-1.2.6.js"></script>
+      
+      <script type="text/javascript" language="javascript" src="js/vis.js"></script>
+  	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>		
+
+    
+  </head>
+
+
+  <body>
+  
+  
+<SCRIPT>
+  jsMath = {
+    Controls: {
+      cookie: {scale: 133},
+      CheckVersion: function () {
+        jsMath.Script.delayedLoad('http://www.math.union.edu/locate/jsMath/jsMath/jsMath-version-check.js');
+      }
+    },
+    Parser: {prototype: {
+      macros: {warning: ["Macro","\\color{##00CC00}{\\rm jsMath\\ appears\\ to\\ be\\  working!}",1]}
+    }}
+  }
+</SCRIPT>
+<SCRIPT SRC="jsMath/plugins/noImageFonts.js"></SCRIPT>
+<SCRIPT SRC="jsMath/jsMath.js"></SCRIPT>
+ <STYLE> #jsMath_Warning {display: none} </STYLE>
+  
+  
+  
+  
+  
+  
+  
+     <nav class="nav" id="navi1">
+  <div class="padded">
+    <ul>
+      <li class="active"><a id="link1" class="nav-section1" href="index.html">Home</a></li>
+      
+      
+      <li class="scrollTop"><a href="#"><span class="entypo-up-open"></span></a></li>
+    </ul>
+  </div>
+</nav>
+
+<article>
+  <h1 id="section1"> Gradient Descent</h1>
+  		<h3>Matrix A</h3>
+  		<input type="text" name="enter" class="enter" value="" id="a11"/>
+        <input type="text" name="enter" class="enter" value="" id="a12"/>
+        <br>
+        <input type="text" name="enter" class="enter" value="" id="a21"/>
+        <input type="text" name="enter" class="enter" value="" id="a22"/>
+        <p>       </p>
+        <h3>Matrix B</h3>
+        <input type="text" name="enter" class="enter" value="" id="b11"/>
+        <br>
+        <input type="text" name="enter" class="enter" value="" id="b21"/>
+        <h3>Alpha(For unoptimised) and Max Iterations</h3>
+		<input type="text" name="enter" class="enter" value="" id="alpha"/>
+		<input type="text" name="enter" class="enter" value="" id="MaxIterations"/>
+		<h3>Please enter range of plotting of contour(Range of both x and y)</h3>
+		<input type="text" name="enter" class="enter" value="" id="range1"/>
+		<input type="text" name="enter" class="enter" value="" id="range2"/>
+		
+		
+        <input type="button" value="Submit" onclick="kk();"/>   
+
+        <h2>Surface Plot</h2>
+        <p>To solve the equation of the form Ax = B we consider its quadratic form and try to find its minimum.<br>
+A quadratic form is simply a scalar, quadratic function of a vector with the form,<br>
+<DIV CLASS="math">
+f(x) = \frac{1}{2}x^{T}Ax -b^{T}x + c
+</DIV>
+
+
+Taking x = [x1 , x2] for better visualisations, we can have input matrix A,b,c .<br><br>
+For example,
+
+<DIV CLASS="math">
+A = \left[\matrix{3& 2\\ 2& 6}\right]     b =  \left[\matrix{2\\ -8}\right] c = 0
+
+</DIV>
+
+In the gradient descent algorithm, taking initial any x1,x2 we get a point on the contour defined by the above quadratic function.Therefore starting from there, we have to decide which direction to go in, if we want the minimum , that direction is -f’(x) , to calculate this we use differentiation to find:-
+
+<DIV CLASS="math">
+f'(x) = \frac{1}{2}A^Tx + \frac{1}{2}Ax - b
+
+</DIV>
+As you can observe above for a symmetric matrix, this converts to Ax - b.
+
+</p>
+        <center><div id="visualization1"></div></center>
+    
+        <br>
+        
+        <h2>Choosing alpha Iterations</h2>
+        <p>In an optimised form of gradient descent, we can use a constant alpha value such that we go &alpha;*(-f’(x)) in the direction from that point and keep iterating till we reach a minimum or start diverging(Note every alpha can’t give us the solution, it may jump over the solution if value of alpha is large).</p>
+        <div id="visualization"></div>
+        <br>
+        <h2>Optimized Iterations</h2>
+        <p>The question is, how big a step should we take?<br>
+
+A line search is a procedure that chooses &alpha; to minimize f along a line.
+
+We are restricted to choosing a point on the intersection of the vertical plane and the paraboloid. 
+
+We get a parabola defined by the intersection of these surfaces. What is the value of &alpha; at the base of the
+
+parabola?<br>
+From basic calculus, &alpha; minimizes f when the directional derivative, f'(x(1)) is equal to zero.By the chain rule,
+<DIV CLASS="math">
+\frac{d}{d&alpha; }f(x_{(1)}) = f'(x_{(1)})^{T} \frac{d}{d&alpha; }x_{(1)} =  f'(x_{(1)})^{T}r_{(0)}
+
+</DIV>
+Where r<sub>i</sub> = b - Ax<sub>i</sub>,  Setting the above expression to zero, we find that &alpha; should be chose such that r<sub>0</sub> and f'(x<sub>1</sub>) are orhtogonal.
+There is an intuitive reason why we should expect these vectors to be orthogonal at the minimum.
+
+There exists differwnt gradient vectors at various points along the search line. The slope of the parabola
+ at any point is equal to the magnitude of the projection of the gradient onto the line .These projections represent the rate of increase of f as one traverses the search line.f is 
+minimized where the projection is zero — where the gradient is orthogonal to the search line.
+
+
+
+</p>
+        <div id="myDiv"></div>
+        
+      
+
+
+  
+
+</article>
+<SCRIPT>
+jsMath.Process(document);
+</SCRIPT>
+
+
+
+<br>
+ <div id ="myDiv"> </div>
+<script type="text/javascript">
+	 function onload() { 
+        a11 = document.getElementById('a11');
+        a12 = document.getElementById('a12');
+        a21 = document.getElementById('a21');
+        a22 = document.getElementById('a22');
+     	b11 = document.getElementById('b11');
+        b21 = document.getElementById('b21');
+     	alphaStar = document.getElementById('alpha');	   
+		maxIt = document.getElementById('MaxIterations');
+		range1 = document.getElementById('range1');	   
+		range2 = document.getElementById('range2');
+    }
+function kk()
+{
+
+		a11 = document.getElementById('a11');
+        a12 = document.getElementById('a12');
+        a21 = document.getElementById('a21');
+        a22 = document.getElementById('a22');
+     	b11 = document.getElementById('b11');
+        b21 = document.getElementById('b21');
+		alphaStar = document.getElementById('alpha');	   
+		maxIt = document.getElementById('MaxIterations');
+		range1 = document.getElementById('range1');	   
+		range2 = document.getElementById('range2');
+		
+	    a11 = parseInt(a11.value,10);
+        a12 = parseInt(a12.value,10);
+        a21 = parseInt(a21.value,10);
+        a22 = parseInt(a22.value,10);
+     	b11 = parseInt(b11.value,10);
+        b21 = parseInt(b21.value,10);
+		 alphaStar = parseFloat(alphaStar.value);
+		 maxIt = parseInt(maxIt.value,10);
+		range1 = parseInt(range1.value,10);
+		range2 = parseInt(range2.value,10);
+		
+		
+		console.log("Alpha star is " + alphaStar);
+		console.log("maxIt is " + maxIt);
+		
+		
+A = [[a11,a12],[a21,a22]];	
+b = [[b11],[b21]];
+c = 0;
+
+
+
+x1 = numeric.linspace(-4,6,11);
+x2 = numeric.linspace(-4,6,11);
+
+
+
+yfinal = [];
+var f,f1,f2;
+
+for(var i = 0; i < 11;i++){
+var y = [];
+for(var j = 0;j < 11;j++){
+
+
+var x = [x1[i],x2[j]];
+xTrans = [[x1[i]],[x2[j]]];
+
+
+
+temp = numeric.dot(x,A);
+f1 = (numeric.dot(temp,xTrans));
+f1 = f1[0];
+f1 = 1/2*f1;
+
+f2 = numeric.dot(b,xTrans);
+f2 = f2[0];
+
+y.push((f1 + f2 + c));
+
+
+}
+yfinal.push(y); 
+}
+//console.log(yfinal);
+
+
+z = []; 
+    cb = function(i,x,f,g,H) { z.push({i:i, x:x, f:f, g:g, H:H }); }; 
+    sol = numeric.uncmin(function(x) { return ((1/2)*(((A[0][0])*x[0]*x[0]) + (A[0][1]*x[0]*x[1]) + (A[1][0]*x[0]*x[1]) + (A[1][1]*x[1]*x[1])) - b[0]*x[0] - b[1]*x[1] + c); },[40,50],1e-10,undefined,200,cb).solution;
+
+
+var data = new vis.DataSet();
+console.log("THe solution is");
+console.log(sol);
+
+
+xa1 = new Array(numeric.dim(z)[0]); ya1 = new Array(numeric.dim(z)[0]);
+for(var i = 0; i< numeric.dim(z)[0] ; i++){
+//console.log(z[i].x);
+
+xa1[i]=z[i].x[0];
+ya1[i]=z[i].x[1];
+data.add([
+  {id: i+1, text: 'point', x: z[i].x[0], y: z[i].x[1], z:0,style: x }
+]);
+}
+
+ 
+var options = {
+        width:  '500px',
+        height: '552px',
+        style: 'line',
+        showPerspective: true,
+        showGrid: true,
+        showShadow: false,
+        keepAspectRatio: true,
+        verticalRatio: 0.5,
+        axisColor:'#4D4D4D',
+        backgrounColor:'gray',
+    };
+
+
+       var trace1 = {
+  x:  xa1,
+  y:  ya1,
+  name: 'yaxis2 data', 
+  yaxis: 'y2', 
+  type: 'scatter',
+   mode: 'lines+markers',
+  color:"#000000"
+};
+
+
+    var size = range2-range1, x21 = new Array(size), y21 = new Array(size), z21 = new Array(size), i, j;
+    var max=1000;
+
+for(var i = 0; i < size; i=i+1) {
+    x21[i]  =  i+range1; 
+    y21[i]= i+range1;   
+    z21[i] = new Array(size);
+}
+
+for(var i = 0; i < size; i++) {
+    for( var j = 0; j < size; j++) {
+        
+        z21[i][j] = 0.5*A[0][0]*y21[j]*y21[j] + 0.5*A[1][1]*x21[i]*x21[i] + 0.5*(A[0][1]+A[1][0])*y21[j]*x21[i] - b[0]*y21[j] - b[1]*x21[i];
+      //  console.log("x= "+x21[i]+" y= "+y21[j]+" z= "+z21[i][j]);
+
+        
+    }
+}
+
+
+var trace2 = {
+  x: x21, 
+  y: y21,
+  z: z21,
+  name: 'yaxis data', 
+  type: 'contour',
+  colorscale: 'Jet',
+  
+        contours:{
+            coloring: 'lines'
+            }
+            };
+
+
+            var data1 = [trace1 , trace2];
+
+var layout = {
+  title: 'Steepest Descent using Line Search', 
+   xaxis:{range:[range1,range2]},
+  yaxis: {title: 'yaxis title',range:[range1,range2]}, 
+  yaxis2: {
+    title: 'yaxis2 title', 
+    titlefont: {color: 'rgb(148, 103, 189)'}, 
+    tickfont: {color: 'rgb(148, 103, 189)'}, 
+    overlaying: 'y', 
+    side: 'right',range:[range1,range2]
+  }
+
+
+};
+
+
+Plotly.newPlot('myDiv', data1, layout);
+//--------------------------------------------------------------------------------------------------------
+var size = range2-range1, x = new Array(size), y = new Array(size), z = new Array(size), i, j;
+    var max=1000;
+
+for(var i = 0; i < size; i=i+1) {
+    x[i]  = i + range1; 
+    y[i]=i + range1;   
+    z[i] = new Array(size);
+}
+
+for(var i = 0; i < size; i++) {
+    for( var j = 0; j < size; j++) {
+        
+        z[i][j] = 0.5*A[0][0]*y[j]*y[j] + 0.5*A[1][1]*x[i]*x[i] + 0.5*(A[0][1]+A[1][0])*y[j]*x[i] - b[0]*y[j] - b[1]*x[i];
+       // console.log("x= "+x[i]+" y= "+y[j]+" z= "+z[i][j]);
+
+        if(z[i][j]<max)
+        {
+            max=z[i][j];
+        }
+    }
+}
+
+
+//console.log("max value= "+max);
+
+
+//-------------------------------------------------------------
+
+
+   var data1 = new vis.DataSet();
+    // create some nice looking data with sin/cos
+    var counter = 0;
+    var steps = 40;  // number of datapoints will be steps*steps
+    var axisMax = 150;
+    var axisStep = axisMax / steps;
+    for (var x0 = -100; x0 < axisMax; x0+=axisStep) {
+        for (var y0 = -100; y0 < axisMax; y0+=axisStep) {
+            var value = 0.5*A[0][0]*x0*x0 + 0.5*A[1][1]*y0*y0 + 0.5*(A[0][1]+A[1][0])*y0*x0 - b[0]*x0 - b[1]*y0;
+            data1.add({id:counter++,x:x0,y:y0,z:value,style:value});
+        }
+    }
+    //1.5*x^2 + 2*x*y + 3*y^2 - 2*x + 8*y
+
+    // specify options
+    var options1 = {
+        width:  '500px',
+        height: '552px',
+        style: 'surface',
+        showPerspective: true,
+        showGrid: true,
+        showShadow: false,
+        keepAspectRatio: true,
+        verticalRatio: 0.5
+    };
+
+    // Instantiate our graph object.
+    var container1 = document.getElementById('visualization1');
+    var graph3d1 = new vis.Graph3d(container1, data1, options1);
+
+
+  var trace2 = {
+  x: x, 
+  y: y,
+  z: z,
+  name: 'yaxis data', 
+  type: 'contour',
+  colorscale: 'Jet',
+        contours:{
+            coloring: 'lines'
+            }
+           
+};
+
+
+
+//-------------------------------------------------------------------
+
+
+
+/*A = [[3,2],[2,6]];  
+b = [2,-8];
+c = 0;*/
+
+init_x1 = 1;
+init_x2 = 1;
+x = [20,20];
+//alphaStar = 0.01;
+//maxIt = 400;
+tol = 1e-5;
+
+residual = 0;
+r = numeric.sub(numeric.dot(A,x), b);
+
+var data = new vis.DataSet();
+x11=new Array(1000);
+x21=new Array(1000);
+
+iter = 0;
+while ((Math.abs(r[0] - x[0]) > tol) && (Math.abs(r[1] - x[1]) > tol) && (iter <= maxIt)){
+
+
+
+data.add([
+  {id: iter+1, text: 'point', x: x[0], y: x[1], z:0,}
+]);
+x11[iter]=x[0];
+x21[iter]=x[1];
+iter++;
+
+
+
+
+grad1 = numeric.dot(x,A);
+grad1[0] = (1/2)*(grad1[0]);
+grad1[1] = (1/2)*(grad1[1]);
+
+grad2 = numeric.dot(x,numeric.transpose(A));
+grad2[0] = (1/2)*(grad2[0]);
+grad2[1] = (1/2)*(grad2[1]);
+
+grad1 = numeric.add(grad1,grad2);
+grad1 = numeric.sub(grad1,b);
+//console.log(grad1);
+ 
+x[0] = x[0] - alphaStar*grad1[0];
+x[1] = x[1] - alphaStar*grad1[1];
+r = numeric.sub(numeric.dot(A,x), b);
+
+
+}
+console.log(x);
+console.log(iter);
+
+   var trace1 = {
+  x: x11,
+  y: x21,
+  name: 'yaxis2 data', 
+  yaxis: 'y2', 
+  type: 'scatter',
+   mode: 'lines+markers',
+  color:"#000000"
+};
+
+
+var data = [trace1, trace2];
+
+var layout = {
+  title: 'Unoptimised Gradient Descent', 
+  xaxis:{range:[range1,range2]},
+  yaxis: {title: 'yaxis title',range:[range1,range2]}, 
+  yaxis2: {
+    title: 'yaxis2 title', 
+    titlefont: {color: 'rgb(148, 103, 189)'}, 
+    tickfont: {color: 'rgb(148, 103, 189)'}, 
+    overlaying: 'y', 
+    side: 'right',range:[range1,range2]
+  }
+
+
+};
+
+
+Plotly.newPlot('visualization', data, layout);
+
+
+
+}
+
+
+</script>
+
+    <!-- --------------------------------Script starts here ------------------------------------------- -->
+
+
+
+
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+        <script src="js/index.js"></script>
+
+    
+   
+    
+  </body>
+</html>

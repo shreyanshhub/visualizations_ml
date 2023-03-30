@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Visualizations</title>
+    <script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="css/katex.min.css">
+    <script src="js/katex.min.js"></script>
+    <script src="js/algebra-0.2.5.min.js"></script> 
+
+
+    
+    <link rel="stylesheet" href="css/normalize.css">
+
+    
+        <link rel="stylesheet" href="css/style.css">
+
+    
+    
+    
+  </head>
+  <style>
+  #svdb {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #FF9800;
+  border: none;
+  border-radius: 10px;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+
+}
+#gradb {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #FF9800;
+  border: none;
+  border-radius: 10px;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 300px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+#lagb {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #FF9800;
+  border: none;
+  border-radius: 10px;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 310px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+.button span {
+
+
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+a:visited {
+	color: white;
+}
+
+  </style>
+
+  <body>
+
+    <nav class="nav" id="navi1">
+  <div class="padded">
+    <ul>
+      <li class="active"><a id="link1" class="nav-section1" href="#section1">Singular Value Decomposition</a></li>
+      <li><a id="link2" class="nav-section2" href="#section2">Gradient Descent</a></li>
+      <li><a id="link3" class="nav-section3" href="#section3">Lagrange Multipliers</a></li>
+      
+      <li class="scrollTop"><a href="#"><span class="entypo-up-open"></span></a></li>
+    </ul>
+  </div>
+</nav>
+
+<article>
+  <h1 id="section1">Singular Value Decomposition</h1>
+  
+  		<br>
+ 		<br> 
+  		The <strong>Singular value decomposition (SVD)</strong> is a factorization of a real or complex matrix. It is the generalization of the eigendecomposition of a positive semidefinite normal matrix (for example, a symmetric matrix with positive eigenvalues) to any <strong>m x n </strong> via an extension of polar decomposition. It has many useful applications in signal processing and statistics.
+  		<br>
+		Formally, the singular value decomposition of an <strong>m x n</strong> real or complex matrix <strong>M</strong>  is a factorization of the form <strong>U&sum;V<sup>*</sup></strong>, where <strong>U</strong> is an <strong>m x m</strong>
+		real or complex unitary matrix, <strong>&sum;</strong> is a <strong>m x n</strong> rectangular diagonal matrix with non-negative real numbers on the diagonal, and <strong>V</strong> is an <strong>n x n</strong> real or complex unitary matrix. The diagonal entries <strong>&sigma;<sub>i</sub></strong> of <strong>&sum;</strong> are known as the singular values of <strong>M</strong>. The columns of <strong>U</strong>  and the columns of <strong>V</strong>  are called the left-singular vectors and right-singular vectors of <strong>M</strong>, respectively.
+		<br>
+  		Visualization of the SVD of a two-dimensional, real shearing matrix M. Given a unit disc together with the two canonical unit vectors. We then see the action of M, which distorts the disk to an ellipse. The SVD decomposes M into three simple transformations: an initial rotation<strong> V<sup>*</sup></strong>, a scaling <strong>&sigma;</strong> along the coordinate axes, and a final rotation <strong>U</strong>. The lengths σ1 and σ2 of the semi-axes of the ellipse are the singular values of <strong>M</strong>.
+  </p>
+  <center><a href="svd.html"><button class="button" id="svdb" style="vertical-align:middle"><span>SVD</span></button></a></center>
+
+  
+</article>
+
+<article>
+  <h1 id="section2">Gradient Descent</h1>
+  <p><strong>"Do not worry about your problems with mathematics, I assure you mine are far greater."</strong>
+   <br>-Albert Einstein
+
+  <br>
+  <br>
+
+  Gradient descent is a first-order optimization algorithm. To find a local minimum of a function using gradient descent, one takes steps proportional to the negative of the gradient (or of the approximate gradient) of the function at the current point. If instead one takes steps proportional to the positive of the gradient, one approaches a local maximum of that function; the procedure is then known as gradient ascent. </p>
+  		<center><a href="gradient.html"><button class="button" id="gradb" style="vertical-align:middle"><span>Gradient Descent</span></button></a></center>
+  </article>
+
+<article>
+  <h1 id="section3">Lagrange Multipliers</h1>
+  <p>The method of Lagrange Multiplier is user to determint the maximum or minimum of a function given a constraint that the points lie on a given curve or surface. The gradient of the function and constraint are parallel at the extremum points and hence we introduce a scalar <span id="expr"></span> which is known as the Lagrange Multiplier to find out the extremum values by equating both the gradients.</p>
+  <script >
+var Expression = algebra.Expression;
+var lambda = new Expression("lambda");
+katex.render(algebra.toTex(lambda), expr);
+
+</script>
+      <center><a href="lagrange.html"><button class="button" id="lagb" style="vertical-align:middle"><span>Lagrange Multipiler</span></button></a></center>
+</article>
+
+
+
+<nav id="footer_div">
+<br>
+
+<span id="credits"> Made by: <a href="mailto:2014csb1015@example.com">Himanshu Tolani</a> | <a href="mailto:2014csb1017@example.com">Jatin Garg</a> | <a href="mailto:2014csb1034@example.com">Skand Vishwanath Peri</a></span>
+<span id="ref"> <a href="ref.html"> References</a> </span>
+<span id="guide">Guided By : <a href="http://cse.iitrpr.ac.in/ckn/home.html"> Dr. C.K.Narayanan</a>  </span>
+
+
+</nav>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+        <script src="js/index.js"></script>
+
+    
+    
+    
+  </body>
+</html>
